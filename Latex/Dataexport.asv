@@ -1,0 +1,59 @@
+% Load image
+image = imread('Spektrum.png');
+
+% Convert image to grayscale
+gray = rgb2gray(image);
+
+% Detect edges in the grayscale image
+edges = edge(gray, 'Canny');
+
+% Find boundaries (contours) in the edge-detected image
+[B, L] = bwboundaries(edges, 'noholes');
+
+% Find the largest boundary (assumed to be the graph)
+max_boundary = max(cellfun(@length, B));
+graph_contour = B{find(cellfun(@length, B) == max_boundary)};
+
+% Plot the grayscale image with the detected graph contour
+figure;
+imshow(gray); hold on;
+plot(graph_contour(:,2), graph_contour(:,1), 'r', 'LineWidth', 2);
+title('Detected Graph Contour');
+
+% Define axis ranges for conversion
+x_min = 251.138;
+x_max = 700.448;
+y_min = -0.1;
+y_max = 0.8;
+
+% Get image dimensions
+[height, width] = size(gray);
+
+% Calculate scaling factors
+x_scale = (x_max - x_min) / width;
+y_scale = (y_max - y_min) / height;
+
+% Convert pixel coordinates to numerical values
+graph_x = x_min + graph_contour(:,2) * x_scale;
+graph_y = y_max - (graph_contour(:,1) * y_scale); % Invert y-values
+
+% Display and plot extracted data points
+data_points = [graph_x, graph_y];
+disp('Extracted Data Points:');
+disp(data_points(1:10, :));
+
+figure;
+plot(graph_x, graph_y, 'b');
+hold on;
+xlabel('Wavelength/Lambda (nm)');
+ylabel('Absorption');
+title('Extracted Graph Line');
+
+% Add grid to the plot
+grid on;
+
+% Plot background signal declining with x^4
+unique_x = unique(graph_x);  % Get unique x values from the graph
+y_background = 0.1 * (unique_x - min(graph_x)).^4; % Adjust scaling factor as needed
+plot(unique_x, y_background, 'r--', 'LineWidth', 2);
+legend('Extracted Graph', 'Background (x^4)', 'Location', 'best');

@@ -1,0 +1,59 @@
+\documentclass[12pt, a4paper]{article}
+
+% Language and encoding
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[german]{babel}
+\usepackage{subcaption}
+
+% Page layout
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+% Graphics and figures
+\usepackage{graphicx}
+\usepackage{float}
+
+% Tables
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+% Mathematics
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Bibliography and referencing
+\usepackage{cite}
+\usepackage{hyperref}
+
+% Header and Footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Biophysics Experiment Protocol}
+\fancyhead[R]{\thepage}
+
+% Title, author, and date
+\title{Protocol for a Biophysics Experiment}
+\author{Your Name}
+\date{\today}
+
+% Custom commands (optional)
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\begin{document}
+
+% Title page
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+% Table of contents
+\tableofcontents
+\newpage
+
+\input{Br Konzentration.tex}
+
+
+\end{document}
